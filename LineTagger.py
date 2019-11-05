@@ -1,9 +1,8 @@
 import nltk
-from nltk.corpus import stopwords
 import shlex
 
-# Stop words from the English dictionary
-stop_words = set(stopwords.words('english'))
+# Stop words
+stop_words = {"ourselves", "hers", "between", "yourself", "again", "there", "about", "once", "during", "out", "very", "having", "they", "own", "an", "be", "some", "for", "its", "yours", "such", "into", "most", "itself", "other", "off", "is", "s", "am", "who", "him", "each", "the", "until", "are", "we", "these", "your", "his", "through", "don", "me", "were", "her", "more", "this", "down", "should", "our", "their", "while", "up", "to", "ours", "had", "she", "no", "when", "at", "any", "them", "same", "been", "have", "will", "on", "does", "yourselves", "then", "that", "because", "what", "why", "so", "can", "did", "not", "now", "he", "you", "has", "just", "where", "too", "only", "myself", "which", "those", "i", "few", "whom", "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how", "further", "was", "here", "than"}
 
 # '' notation for non-separable words
 sentence = input("Enter your search...\n")
