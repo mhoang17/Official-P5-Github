@@ -25,23 +25,27 @@ stop_words = {"ourselves", "hers", "between", "yourself", "again", "there", "abo
 #stop_words.update(adj3)
 
 
+#print({word for word, pos in brown.tagged_words() if pos.startswith('IN')})
+
+
 # '' notation for non-separable words
-sentence = input("Enter your search...\n")
-sentence_arr = shlex.split(sentence, posix=False)
-tag_arr = []
+while True:
+    sentence = input("Enter your search...\n")
+    sentence_arr = shlex.split(sentence, posix=False)
+    tag_arr = []
 
-# Tokenize the words
-for i in range(len(sentence_arr)):
-    # If the element has a ' in it, it means that it should automatically be seen as a keyword
-    if "'" in sentence_arr[i] or "\"" in sentence_arr[i]:
-        tag_arr.append(sentence_arr[i])
+    # Tokenize the words
+    for i in range(len(sentence_arr)):
+        # If the element has a ' in it, it means that it should automatically be seen as a keyword
+        if "'" in sentence_arr[i] or "\"" in sentence_arr[i]:
+            tag_arr.append(sentence_arr[i])
 
-    #
-    else:
-        tag = nltk.word_tokenize(sentence_arr[i])
-        filtered_text = [w for w in tag if not w in stop_words]
+        #
+        else:
+            tag = nltk.word_tokenize(sentence_arr[i])
+            filtered_text = [w for w in tag if not w in stop_words]
 
-        if filtered_text:
-            tag_arr.append(nltk.pos_tag(filtered_text))
+            if filtered_text:
+                tag_arr.append(nltk.pos_tag(filtered_text))
 
-print("Tagged sentence: ", tag_arr)
+    print("Tagged sentence: ", tag_arr)
