@@ -2,7 +2,7 @@ import pandas as pd
 
 # Read the files with actor names, movie titles and principal (relations between actors and movies)
 names = pd.read_csv("names.csv", sep='\t', nrows=200000, low_memory=False)
-titles = pd.read_csv("Title_Movie.csv", sep='\t', low_memory=False, encoding = "ISO-8859-1")
+titles = pd.read_csv("titles.csv", sep='\t', low_memory=False, encoding = "ISO-8859-1")
 principal = pd.read_csv("principal.csv", sep='\t', nrows=900000, low_memory=False)
 
 # We only need specific information, so we store them here
