@@ -1,9 +1,9 @@
 import pandas as pd
 
 # Read the files with actor names, movie titles and principal (relations between actors and movies)
-names = pd.read_csv("names.csv", sep='\t', nrows=200000, low_memory=False)
-titles = pd.read_csv("titles.csv", sep='\t', low_memory=False, encoding = "ISO-8859-1")
-principal = pd.read_csv("principal.csv", sep='\t', nrows=900000, low_memory=False)
+names = pd.read_csv("names.csv", sep=',', nrows=200000, low_memory=False)
+titles = pd.read_csv("titles.csv", sep='\t', low_memory=False, encoding="ISO-8859-1")
+principal = pd.read_csv("principal.csv", sep=',', nrows=900000, low_memory=False)
 
 # We only need specific information, so we store them here
 names = names[['nconst', 'primaryName']]
@@ -29,19 +29,25 @@ def write_knowledge_graph(movie_id):
 
     # Here we find the predicate: if actor/actress: starred_in, director: directed_by, writer: written_by
     for i in range(len(nconst)):
-        if category[i].lower() == "actor" or category[i].lower() ==  "actress":
+        if category[i].lower() == "actor" or category[i].lower() == "actress":
             line = nconst[i] + "\tstarred_in\t" + tconst + "\n"
+            line_2 = tconst + "\thas_actor\t" + nconst[i] + "\n"
             f.write(line)
+            f.write(line_2)
         elif category[i].lower() == "director":
-            line = nconst[i] + "\tdirected_by\t" + tconst + "\n"
+            line = nconst[i] + "\tdirected\t" + tconst + "\n"
+            line_2 = tconst + "\tdirected_by\t" + nconst[i] + "\n"
             f.write(line)
+            f.write(line_2)
         elif category[i].lower() == "writer":
-            line = nconst[i] + "\twritten_by\t" + tconst + "\n"
+            line = nconst[i] + "\thas_written\t" + tconst + "\n"
+            line_2 = tconst + "\twritten_by\t" + nconst[i] + "\n"
             f.write(line)
+            f.write(line_2)
 
 
 # For n people, run function and write relations to file
-NUMBER_OF_MOVIES = 300
+NUMBER_OF_MOVIES = 500
 for i in range(NUMBER_OF_MOVIES):
     write_knowledge_graph(i)
 
