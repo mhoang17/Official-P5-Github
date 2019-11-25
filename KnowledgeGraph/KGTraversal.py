@@ -1,5 +1,5 @@
 import csv
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 
 per_subject = defaultdict(list)
 with open('knowledge_graph.csv') as inputfile:
@@ -9,23 +9,22 @@ with open('knowledge_graph.csv') as inputfile:
         subject, predicate, object = row_list
         per_subject[subject].append(predicate)
         per_subject[subject].append(object)
-    print(per_subject)
 
 
 def find_all_paths(graph, start, edges, j):
     paths = []
     for i in range(len(graph[start]) - 1):
-        if graph[start][i] == predicate_list[j] and i != len(graph[start]):
+        if graph[start][i] == edges[j] and i != len(graph[start]):
             i += 1
             if graph[start][i] not in visited_nodes:
                 paths.append(graph[start][i])
                 visited_nodes.append(graph[start][i])
             if j != len(edges) - 1:
-                new_path = find_all_paths(graph, graph[start][i], predicate_list, j + 1)
+                new_path = find_all_paths(graph, graph[start][i], edges, j + 1)
                 paths = paths + new_path
     return paths
 
 
-visited_nodes = ['nm0063086']
-predicate_list = ['starred_in', 'has_actor']
+visited_nodes = ['Hamlet']
+predicate_list = ['has_actor', 'starred_in']
 print(find_all_paths(per_subject, visited_nodes[0], predicate_list, 0))
