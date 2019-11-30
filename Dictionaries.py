@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def make_dict():
-    names = pd.read_csv("csvFiles/names.csv", sep=',', nrows=4000000, low_memory=False)
+    names = pd.read_csv("csvFiles/names.csv", sep=',', low_memory=False)
     titles = pd.read_csv("csvFiles/titles.csv", sep='\t', low_memory=False, encoding="ISO-8859-1")
     dictionary = {}
 
@@ -17,7 +17,7 @@ def make_dict():
 
 def make_persons_dict():
     names_dict = {}
-    names = pd.read_csv("../csvFiles/names.csv", sep=',', nrows=1000000, low_memory=False)
+    names = pd.read_csv("../csvFiles/names.csv", sep=',', low_memory=False)
 
     # Load all names into the names dictionary
     for i in range(len(names) - 1):

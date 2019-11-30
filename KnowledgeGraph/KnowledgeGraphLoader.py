@@ -3,7 +3,7 @@ import Dictionaries
 
 
 def write_kg(file):
-    principal = pd.read_csv("../csvFiles/principals.csv", sep=',', nrows=3000000, low_memory=False)
+    principal = pd.read_csv("../csvFiles/principals.csv", sep=',', low_memory=False)
     titles_dict = Dictionaries.make_titles_dict()
 
     # For each entry in principal, save it to the KG file with the proper relations
@@ -11,10 +11,8 @@ def write_kg(file):
 
         # Some ID's from the principal file doesn't exist in titles file/dictionary
         #  and therefore we need to catch the KeyError exception and ignore the missing id
-        try:
+        if principal['tconst'].values[i] in titles_dict:
             # Find the names and titles as well find the category of which the actor had in the movie
-            titles_dict[principal['tconst']]
-
             movie_id = principal['tconst'].values[i]
             person_id = principal['nconst'].values[i]
             category = principal['category'].values[i].lower()
@@ -38,9 +36,6 @@ def write_kg(file):
             # Write to file
             file.write(line)
             file.write(line2)
-
-        except KeyError:
-            continue
 
 
 # Create a file which is our knowledge graph and write the header
