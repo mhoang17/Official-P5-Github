@@ -15,7 +15,7 @@ def read_Files(path):
         print('    ..' + filename +' - '+ str(count_Of) +' of '+ str(len(all_files)))
         Get_Only_FileName = os.path.basename(filename)
         Only_FileName = Get_Only_FileName.replace('.csv','')
-        df = pd.read_csv(filename, header=0, low_memory=False, encoding='ISO-8859-1' )
+        df = pd.read_csv(filename, header=0, low_memory=False, encoding='utf-8' )
         csv_Data_Dict[Only_FileName] = df
         count_Of += 1
     end_File = time.time()

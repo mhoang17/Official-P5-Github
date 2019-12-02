@@ -1,6 +1,7 @@
+import sys
+sys.path.insert(0, '/home/plebsbench/Documents/P5_Project/P5GitHub/Official-P5-Github')
 import numpy as np
 from PredicatesEnum import PredicatesEnum as PreEnum
-
 
 def most_relevant_path(paths, question):
     # Array of the values of relevance will be stored here
@@ -25,7 +26,7 @@ def relevance(path, question):
 
     # For each label in the path, sum their relevance to all words in the question.
     for label in path:
-        if label not in PreEnum.value2member_map_:
+        if label not in PreEnum._value2member_map_:
             sum_results += relevance_part(label, token_list)
 
     # Return the mean value of the relevance

@@ -13,6 +13,6 @@ def train_model(sent):
 
     #similarities = model.wv.most_similar('Fred Astaire')
 
-    saved_model = model.save("word2vec.model")
+    saved_model = model.save("PrefaceOutput/word2vec.model")
     
     #print(model11.wv.most_similar(["actor", "Fred Astaire"], topn=11, indexer=None))

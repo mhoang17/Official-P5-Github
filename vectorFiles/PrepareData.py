@@ -1,13 +1,14 @@
+import sys
+sys.path.insert(0, '/home/plebsbench/Documents/P5_Project/P5GitHub/Official-P5-Github')
 import glob, time, os
 import pandas as pd
 import gensim
-import LoadFiles
-import TrainModelWord2Vec
+from vectorFiles import TrainModelWord2Vec
 from gensim.models import Word2Vec
 from nltk.tokenize import sent_tokenize, word_tokenize
 
 def Word_2_Vec_Model(final_List, csv_Data_Dict):
-    print('\n[+] Preparing the data for model')
+    #print('\n[+] Preparing the data for model')
     # Create new dataframe with columns as features from new dataframe
     dataFrame_Features = csv_Data_Dict.get('names').loc[:,['primaryName','primaryProfession']][:10]
     
@@ -25,9 +26,9 @@ def Word_2_Vec_Model(final_List, csv_Data_Dict):
 
     # Create the list of list format of the custom corpus for gensim modeling
     sent = [row.split(',') for row in df_clean['clean']]
-    print(sent[:10])
+    #print(sent[:10])
     end_Pre_data = time.time()
-    print('     ..Total time (s) for preparing data = ' + str(end_Pre_data-start_Pre_Data) + '\n')
+    #print('     ..Total time (s) for preparing data = ' + str(end_Pre_data-start_Pre_Data) + '\n')
     
     return TrainModelWord2Vec.train_model(sent)
 
@@ -71,13 +72,13 @@ def data_Manipulation(Actors_Movie_IDs_List, movie_Title_IDs_Dict):
     
     return final_List 
 
-
-print('\n[+] Running... please wait \n')
-path = 'csvFiles/*.csv' # use your path
-dataset = LoadFiles.read_Files(path)
-known_For_Tuple_List = actor_Known_For_Movies(dataset)
-movie_Titles_In_Dict = movie_Titles_And_IDs(dataset)
-final_List = data_Manipulation(known_For_Tuple_List, movie_Titles_In_Dict)
-Word_2_Vec_Model(final_List, dataset)
+def run_Model(dataset):
+    #print('\n[+] Running... please wait \n')
+    # path = 'csvFiles/*.csv' # use your path
+    # dataset = Preface.csv_Data_Dict
+    known_For_Tuple_List = actor_Known_For_Movies(dataset)
+    movie_Titles_In_Dict = movie_Titles_And_IDs(dataset)
+    final_List = data_Manipulation(known_For_Tuple_List, movie_Titles_In_Dict)
+    Word_2_Vec_Model(final_List, dataset)
 
 

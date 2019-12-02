@@ -1,10 +1,8 @@
 import pandas as pd
-from utils import Dictionaries
 
-
-def write_kg(file):
-    principal = pd.read_csv("../csvFiles/principals.csv", sep=',', low_memory=False)
-    titles_dict = Dictionaries.make_titles_dict()
+def write_kg(file, dataset):
+    principal = dataset.get('principals')
+    titles_dict = dataset.get('titles')
 
     # For each entry in principal, save it to the KG file with the proper relations
     for i in range(len(principal) - 1):
@@ -37,12 +35,12 @@ def write_kg(file):
             file.write(line)
             file.write(line2)
 
+def runKGL(dataset):
+    # Create a file which is our knowledge graph and write the header
+    kg = open('PrefaceOutput/knowledge_graph.csv', 'w')
+    kg.write('subject\tpredicate\tobject\n')
 
-# Create a file which is our knowledge graph and write the header
-kg = open('knowledge_graph.csv', 'w')
-kg.write('subject\tpredicate\tobject\n')
+    # Write to the KG file
+    write_kg(kg, dataset)
 
-# Write to the KG file
-write_kg(kg)
-
-kg.close()
+    kg.close()

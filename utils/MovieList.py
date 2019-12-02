@@ -5,7 +5,7 @@ import time
 #Load csv file from path and return a list
 def loadFiles():
     startPreData = time.time()
-    csvDataList = []
+    csvDataDict = []
 
     pd.set_option('display.max_rows', 50)
 
@@ -15,25 +15,25 @@ def loadFiles():
     for filename in all_files:
         df = pd.read_csv(filename, index_col=None, header=0, low_memory=False, encoding='ISO-8859-1')
         print(filename)
-        csvDataList.append(df)
+        csvDataDict.append(df)
 
     endPredata = time.time()
     print('     ..Total time (s) for preparing data = ' + str(endPredata - startPreData) + '\n')
-    return csvDataList
+    return csvDataDict
 
 
-csvDataList = loadFiles()
+#csvDataDict = Preface.csv_Data_Dict
 
 #Takes 3 columns and return a list with only movies.
-def createMovielist(csvDataList):
+def createMovielist(csvDataDict):
     titleTypeList = []
-    for item in csvDataList[1]['titleType'].iteritems():
+    for item in csvDataDict.get('titles')['titleType'].iteritems():
         titleTypeList.append(item[1])
     tConstList = []
-    for item in csvDataList[1]['tconst'].iteritems():
+    for item in csvDataDict.get('titles')['tconst'].iteritems():
         tConstList.append(item[1])
     titleList = []
-    for item in csvDataList[1]['primaryTitle'].iteritems():
+    for item in csvDataDict.get('titles')['primaryTitle'].iteritems():
         titleList.append(item[1])
     movieList = []
     #All the list are equal in length, and the elements fits together from the original list
@@ -46,13 +46,16 @@ def createMovielist(csvDataList):
     return movieList
 
 
-movieList = makeMovielist(csvDataList)
+#movieList = createMovielist(csvDataDict)
 
 #Writes to a file by giving the function the name for the file and the data
-def writeToFile(name, data):
+def write_To_File(name, data):
     with open(name, 'w') as f:
         for item in data:
             f.write('%s\n' % item)
 
-#Calling the function and giving it the name.
-writeToFile('movieList.txt', movieList)
+def run_Movie_List(dataset):
+    #csvDataDict = Preface.csv_Data_Dict
+    movieList = createMovielist(dataset)
+    #Calling the function and giving it the name.
+    write_To_File('PrefaceOutput/movieList.txt', movieList)
