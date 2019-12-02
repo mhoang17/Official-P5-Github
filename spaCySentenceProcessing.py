@@ -1,6 +1,4 @@
 import spacy
-from spacy.tokens.token import Token
-from nltk.corpus import wordnet
 from spacy.matcher.matcher import Matcher
 import PredicatesEnum as pe
 import shlex
@@ -12,7 +10,7 @@ nlp = spacy.load("en_core_web_sm")
 # Raw input string
 str = "movie directed by Steven Spielberg and with Tom Hanks"
 
-# Split things in quotation from the rest
+# Split the string in quotation from the rest of the string
 str_split = shlex.split(str, posix=True)
 
 # Create string which we analyse the word classes and which word should be converted into one
@@ -30,7 +28,6 @@ for element in str_split:
     # Add to dictionary
     position[str_split.index(element)] = element
 
-#
 doc = nlp(new_string)
 matcher = Matcher(nlp.vocab)
 
@@ -55,7 +52,7 @@ def extract_triple(nlp_doc):
 
 extract_triple(doc)
 
-# We need a copy of the triples list, in order to pop things from the list while looping over it
+# We need a copy of the triples list, in order to pop words from the list while looping over it
 searchWords = list(triples)
 
 for i in range(len(triples) - 1):
@@ -74,7 +71,7 @@ for i in range(len(triples) - 1):
         searchWords[i] = con
         searchWords.pop(i + 1)
 
-# We want to merge the things in quotation with the newly found stuff
+# We want to merge the words in quotation with the newly found words
 new_search_words = []
 i = 0
 for element in position:
@@ -103,18 +100,8 @@ for i in range(len(new_search_words)):
     elif "written" in element:
         new_search_words[i] = ["has_written"]
 
-'''for syn in wordnet.synsets(element):
-        for l in syn.lemmas():
-            synonyms.append(l.name())
-        for synonym in synonyms:
-            if synonym == 'starred' or synonym == 'played':
-                new_search_words[i] = "starred_in"
-            elif synonym == 'made' or synonym == 'directed':
-                new_search_words[i] = "directed"
-            elif synonym == 'written':
-                new_search_words[i] = "has_written"'''
 
-# Reverse the list so we can correctly bind things
+# Reverse the list so we can correctly bind words
 new_search_words.reverse()
 
 # Subject, predicate, object list
@@ -135,84 +122,3 @@ for i in range(len(new_search_words)):
                 break
 
 print(spo)
-
-# searchWords = [x.strip() for x in tripleString.split(' ')]
-# print(searchWords)
-'''
-synonyms = []
-
-for item in searchWords:
-    if item == "with":
-        searchWords.insert(searchWords.index(item), "has_actor")
-        searchWords.remove(item)
-        print(searchWords)
-    for syn in wordnet.synsets(item):
-        for l in syn.lemmas():
-            synonyms.append(l.name())
-        for synonym in synonyms:
-            if synonym == 'starred' or synonym == 'played':
-                searchWords.insert(searchWords.index(item), "starred_in")
-                searchWords.remove(item)
-                print(searchWords)
-            elif synonym == 'directed' or synonym == 'by':
-                searchWords.insert(searchWords.index(item), "directed_by")
-                searchWords.remove(item)
-                print(searchWords)
-            elif synonym == 'written':
-                searchWords.insert(searchWords.index(item), "has_written")
-                searchWords.remove(item)
-                print(searchWords)
-
-
-# TODO: Maybe we should revise these keywords sometime
-stop_words = ["ourselves", "hers", "between", "yourself", "again", "there", "about", "once",
-              "during", "out", "very", "having", "they", "own", "an", "be", "some", "for",
-              "its", "yours", "such", "into", "most", "itself", "other", "off", "is", "s",
-              "am", "who", "him", "each", "the", "until", "are", "we", "these", "your", "his",
-              "through", "don", "me", "were", "her", "more", "this", "down", "should", "our",
-              "their", "while", "up", "to", "ours", "had", "she", "no", "when", "at", "any",
-              "them", "same", "been", "have", "will", "on", "does", "yourselves", "then", "that",
-              "because", "what", "why", "so", "can", "did", "not", "now", "he", "you", "has",
-              "just", "where", "too", "only", "myself", "which", "those", "i", "few", "whom",
-              "t", "being", "if", "theirs", "my", "against", "a", "by", "doing", "it", "how",
-              "further", "was", "here", "than"]
-
-# extract all tokens from doc and put them in a list called keywords
-for token in doc:
-    keywords.append(token)
-
-# if a string in stop_words appear in the keywords list, it'll be removed from keywords
-for x in stop_words:
-    for y in keywords:
-        if x == str(y):
-            keywords.remove(y)
-
-# reversing the order of words in the keywords list
-keywords.reverse()
-print(keywords)
-
-synonyms = []
-
-input = "written"
-
-# e-num for all predicates
-# how not to remove stopwords from movie titles
-
-for syn in wordnet.synsets(input):
-    for l in syn.lemmas():
-        synonyms.append(l.name())
-
-# printing set for avoiding duplicates
-print(set(synonyms))
-
-
-for synonym in synonyms:
-    if synonym == 'starred' or synonym == 'played':
-        print("starred_in")
-    elif synonym == 'with':
-        print("has_actor")
-    elif synonym == 'directed':
-        print("directed")
-    elif synonym == 'written':
-        print("has_written")
-'''
