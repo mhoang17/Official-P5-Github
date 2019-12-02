@@ -1,5 +1,5 @@
 import pandas as pd
-import Dictionaries
+from utils import Dictionaries
 
 
 def write_kg(file):

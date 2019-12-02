@@ -1,8 +1,8 @@
 from utils import Dictionaries
-from KnowledgeGraph import KGTraversal, Relevance
+from KnowledgeGraph import KGTraversal, PathProcessing, Relevance
 from PredicatesEnum import PredicatesEnum as PreEnum
 import traceback
-from QueryProcesing import QueryAnalysisCopy, WordToKey, SectioningPaths, SeperateAllPaths
+from QueryProcesing import QueryAnalysis, WordToKey
 
 
 # Create the dictionary of all ID's and their names
@@ -23,7 +23,7 @@ while True:
 
         # Query analysis - output is a list of all entities and which predicates that should be in the path
         # (Eg. [['Tom Hanks', [starred_in]], ['Steven Spielberg',[directed]]])
-        entity_predicate_list = QueryAnalysisCopy.query_processing(user_input)
+        entity_predicate_list = QueryAnalysis.query_processing(user_input)
 
         # TODO: delete this print
         print(entity_predicate_list)
@@ -102,7 +102,7 @@ while True:
         # TODO: delete this print
         print("Result: ", all_paths)
 
-        sec_all_paths = SectioningPaths.path_sectioning(all_paths)
+        sec_all_paths = PathProcessing.path_sectioning(all_paths)
 
         # TODO: delete print
         print("Combined Answer: ", sec_all_paths)
@@ -124,7 +124,7 @@ while True:
         #                   'Jumanji: Welcome to the Jungle', 'has_actor', 'Dwayne Johnson',
         #                   'Jumanji: Welcome to the Jungle', 'has_actor', 'actor3'],...]
         # This we cannot use when calculating the relevance and we need to reformat it
-        paths_list = SeperateAllPaths.seperate_all_paths(predicates, sec_all_paths, names)
+        paths_list = PathProcessing.seperate_all_paths(predicates, sec_all_paths, names)
 
         # TODO: change this print to be the input parameter for the relevance function
         print(paths_list)
