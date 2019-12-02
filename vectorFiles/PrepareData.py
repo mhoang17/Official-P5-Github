@@ -6,78 +6,78 @@ import TrainModelWord2Vec
 from gensim.models import Word2Vec
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-def Word2VecModel(finalList, csvDataDict):
+def Word_2_Vec_Model(final_List, csv_Data_Dict):
     print('\n[+] Preparing the data for model')
     # Create new dataframe with columns as features from new dataframe
-    dataFrameFeatures = csvDataDict.get('names').loc[:,['primaryName','primaryProfession']] 
+    dataFrame_Features = csv_Data_Dict.get('names').loc[:,['primaryName','primaryProfession']][:10]
     
     # Adding the generated list as colunm to the dataframe
-    dataFrameFeatures['knownForTitles'] = finalList
+    dataFrame_Features['knownForTitles'] = final_List
 
     # Timing data preparation  
-    startPreData = time.time()
+    start_Pre_Data = time.time()
 
     # For each row, combine all the columns into  one column
-    comboColunmList = dataFrameFeatures.apply(lambda x: ','.join(x.astype(str)), axis=1)
+    combo_Colunm_List = dataFrame_Features.apply(lambda x: ','.join(x.astype(str)), axis=1)
 
     # Store and clean in a pandas dataframe
-    df_clean = pd.DataFrame({'clean': comboColunmList})
+    df_clean = pd.DataFrame({'clean': combo_Colunm_List})
 
     # Create the list of list format of the custom corpus for gensim modeling
     sent = [row.split(',') for row in df_clean['clean']]
     print(sent[:10])
-    endPredata = time.time()
-    print('     ..Total time (s) for preparing data = ' + str(endPredata-startPreData) + '\n')
+    end_Pre_data = time.time()
+    print('     ..Total time (s) for preparing data = ' + str(end_Pre_data-start_Pre_Data) + '\n')
     
-    return TrainModelWord2Vec.trainModel(sent)
+    return TrainModelWord2Vec.train_model(sent)
 
-def actorKnownForMovies(csvDataDict):
+def actor_Known_For_Movies(csv_Data_Dict):
     # Get the data form dataset and make dict of actor and known in movies
-    ActorsMovieIDs = csvDataDict.get('names')[['primaryName', 'knownForTitles']]
-    ActorsMovieIDsList = list(zip(ActorsMovieIDs.primaryName, ActorsMovieIDs.knownForTitles))
-    return ActorsMovieIDsList
+    Actors_Movie_IDs = csv_Data_Dict.get('names')[['primaryName', 'knownForTitles']][:10]
+    Actors_Movie_IDs_List = list(zip(Actors_Movie_IDs.primaryName, Actors_Movie_IDs.knownForTitles))
+    return Actors_Movie_IDs_List
 
-def movieTitlesAndIDs(csvDataDict): 
+def movie_Titles_And_IDs(csv_Data_Dict): 
     # Get the data form dataset and make tuples of movies and their dataset ID
-    moviesTitleIDs = csvDataDict.get('titles')[['tconst','primaryTitle']]
-    movieTitleIDsDict = dict(zip(moviesTitleIDs.tconst, moviesTitleIDs.primaryTitle)) # {movieName : ttID} 
-    return movieTitleIDsDict
+    movies_Title_IDs = csv_Data_Dict.get('titles')[['tconst','primaryTitle']]
+    movie_Title_IDs_Dict = dict(zip(movies_Title_IDs.tconst, movies_Title_IDs.primaryTitle)) # {movieName : ttID} 
+    return movie_Title_IDs_Dict
 
 
-def dataManipulation(ActorsMovieIDsList, movieTitleIDsDict):
-    listOfKnowTitles = []    
-    finalList = []
+def data_Manipulation(Actors_Movie_IDs_List, movie_Title_IDs_Dict):
+    list_Of_Know_Titles = []    
+    final_List = []
 
-    for actorName, ttIDs in ActorsMovieIDsList:
-        listOfKnowTitles = []
-        listOfKnowTitles.append(ttIDs.split(','))
-        placeHolderString = ''
-        countList = listOfKnowTitles[0]
-        for tID in countList:
+    for actor_Name, ttIDs in Actors_Movie_IDs_List:
+        list_Of_Know_Titles = []
+        list_Of_Know_Titles.append(ttIDs.split(','))
+        place_Holder_String = ''
+        count_List = list_Of_Know_Titles[0]
+        for tID in count_List:
             if tID == '\\N':
                 break
                 
             try:
-                placeHolderString += actorName + ','
-                placeHolderString  += movieTitleIDsDict[tID]
+                place_Holder_String += actor_Name + ','
+                place_Holder_String  += movie_Title_IDs_Dict[tID]
                 
             except KeyError:
                 continue
                 
-            if tID != countList[len(countList)-1]:
-                placeHolderString += ','
+            if tID != count_List[len(count_List)-1]:
+                place_Holder_String += ','
 
-        finalList.append([placeHolderString])
+        final_List.append(place_Holder_String)
     
-    return finalList 
+    return final_List 
 
 
 print('\n[+] Running... please wait \n')
 path = 'csvFiles/*.csv' # use your path
-dataset = LoadFiles.readFiles(path)
-knownForTupleList = actorKnownForMovies(dataset)
-movieTitlesInDict = movieTitlesAndIDs(dataset)
-finalList = dataManipulation(knownForTupleList, movieTitlesInDict)
-Word2VecModel(finalList, dataset)
+dataset = LoadFiles.read_Files(path)
+known_For_Tuple_List = actor_Known_For_Movies(dataset)
+movie_Titles_In_Dict = movie_Titles_And_IDs(dataset)
+final_List = data_Manipulation(known_For_Tuple_List, movie_Titles_In_Dict)
+Word_2_Vec_Model(final_List, dataset)
 
 
