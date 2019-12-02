@@ -31,6 +31,8 @@ def find_all_paths(graph, start, edges, visited_nodes, j):
             #  If the current node has not been visited before, it will be added to the path
             #  and to the list of the visited nodes
             if subject_values[i] not in visited_nodes:
+                paths.append(start)
+                paths.append(edges[j])
                 paths.append(subject_values[i])
                 visited_nodes.append(subject_values[i])
                 #  As long as we have not reached the end of the list of edges
@@ -38,5 +40,5 @@ def find_all_paths(graph, start, edges, visited_nodes, j):
                     #  Store the traversal of graph into the variable new_path and then add new_path to
                     #  the already existing paths
                     new_path = find_all_paths(graph, subject_values[i], edges, visited_nodes, j + 1)
-                    paths = paths + new_path
+                    paths += new_path
     return paths
