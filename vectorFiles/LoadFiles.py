@@ -1,26 +1,26 @@
 import glob, os, time
 import pandas as pd
 
-csvDict = {}
+csv_Dict = {}
 
-def readFiles(path):
+def read_Files(path):
     all_files = glob.glob(path)
-    csvDataDict = {}
-    countOf = 1
+    csv_Data_Dict = {}
+    count_Of = 1
 
     print('[+] Runing files ')
-    startFile = time.time()  
+    start_File = time.time()  
     
     for filename in all_files:
-        print('    ..' + filename +' - '+ str(countOf) +' of '+ str(len(all_files)))
-        GetOnlyFileName = os.path.basename(filename)
-        OnlyFileName = GetOnlyFileName.replace('.csv','')
+        print('    ..' + filename +' - '+ str(count_Of) +' of '+ str(len(all_files)))
+        Get_Only_FileName = os.path.basename(filename)
+        Only_FileName = Get_Only_FileName.replace('.csv','')
         df = pd.read_csv(filename, header=0, low_memory=False, encoding='ISO-8859-1' )
-        csvDataDict[OnlyFileName] = df
-        countOf += 1
-    endFile = time.time()
-    csvDict = csvDataDict
-    print('    ... Total time reading files (s) = ' + str(endFile-startFile) + '\n')
-    return csvDataDict
+        csv_Data_Dict[Only_FileName] = df
+        count_Of += 1
+    end_File = time.time()
+    csv_Dict = csv_Data_Dict
+    print('    ... Total time reading files (s) = ' + str(end_File-start_File) + '\n')
+    return csv_Data_Dict
 
     
