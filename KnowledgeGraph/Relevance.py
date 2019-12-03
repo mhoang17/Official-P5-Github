@@ -37,9 +37,18 @@ def relevance(path, question):
 def relevance_part(label, question):
     model = Word2Vec.load('PrefaceOutput/word2vec.model')
     similarities = [0]
+    
     i = 1
     for token in question:
-        similarities.append(model.wv.most_similar([token, label], topn=11, indexer=None))
+        try:
+            testMe = dict(model.wv.most_similar([label, token], topn=5, indexer=None))
+            print('Token: '+ token + ' Label: '+ label)
+            print(testMe)
+            print('\n')
+        except KeyError:
+            continue
+        for similarityValue in testMe.values():
+            similarities.append(similarityValue)
         i += 1
         # Word2Vec function here
         # Add value to similarities array
