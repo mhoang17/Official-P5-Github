@@ -10,16 +10,17 @@ def runPreface():
 
     csv_Data_Dict = LoadFiles.read_Files('csvFiles/*.csv')
 
+    print('[+] Running Movie list')
+    #MovieList.run_Movie_List(csv_Data_Dict)
+    print('     ..Done with Movie list\n')
+
     print('[+] Running knowledge graph')
     KnowledgeGraphLoader.runKGL(csv_Data_Dict)
-    print('     ..Done with knowlegde graph')
+    print('     ..Done with knowledge graph\n')
     
-    print('\n[+] Running Movie list')
-    MovieList.run_Movie_List(csv_Data_Dict)
-    print('     ..Done with Movie list')
     
-    print('\n[+] Running model')
-    PrepareData.run_Model(csv_Data_Dict)
+    print('[+] Running model')
+   #PrepareData.run_Model(csv_Data_Dict)
     print('     ..Done with model')
 
 runPreface()
