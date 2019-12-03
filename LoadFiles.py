@@ -1,7 +1,6 @@
 import glob, os, time
 import pandas as pd
 
-csv_Dict = {}
 
 def read_Files(path):
     all_files = glob.glob(path)
@@ -19,7 +18,7 @@ def read_Files(path):
         csv_Data_Dict[Only_FileName] = df
         count_Of += 1
     end_File = time.time()
-    csv_Dict = csv_Data_Dict
+ 
     print('    ... Total time reading files (s) = ' + str(end_File-start_File) + '\n')
     return csv_Data_Dict
 
