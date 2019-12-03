@@ -7,10 +7,10 @@ from vectorFiles import TrainModelWord2Vec
 from gensim.models import Word2Vec
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-def Word_2_Vec_Model(final_List, csv_Data_Dict):
+def prepare_data(final_List, csv_Data_Dict):
     #print('\n[+] Preparing the data for model')
     # Create new dataframe with columns as features from new dataframe
-    dataFrame_Features = csv_Data_Dict.get('names').loc[:,['primaryName','primaryProfession']][:10]
+    dataFrame_Features = csv_Data_Dict.get('names').loc[:,['primaryName','primaryProfession']]
     
     # Adding the generated list as colunm to the dataframe
     dataFrame_Features['knownForTitles'] = final_List
@@ -28,13 +28,13 @@ def Word_2_Vec_Model(final_List, csv_Data_Dict):
     sent = [row.split(',') for row in df_clean['clean']]
     #print(sent[:10])
     end_Pre_data = time.time()
-    #print('     ..Total time (s) for preparing data = ' + str(end_Pre_data-start_Pre_Data) + '\n')
+    print('     ..Total time (s) for preparing data = ' + str(end_Pre_data-start_Pre_Data) + '\n')
     
     return TrainModelWord2Vec.train_model(sent)
 
 def actor_Known_For_Movies(csv_Data_Dict):
     # Get the data form dataset and make dict of actor and known in movies
-    Actors_Movie_IDs = csv_Data_Dict.get('names')[['primaryName', 'knownForTitles']][:10]
+    Actors_Movie_IDs = csv_Data_Dict.get('names')[['primaryName', 'knownForTitles']]
     Actors_Movie_IDs_List = list(zip(Actors_Movie_IDs.primaryName, Actors_Movie_IDs.knownForTitles))
     return Actors_Movie_IDs_List
 
@@ -79,6 +79,6 @@ def run_Model(dataset):
     known_For_Tuple_List = actor_Known_For_Movies(dataset)
     movie_Titles_In_Dict = movie_Titles_And_IDs(dataset)
     final_List = data_Manipulation(known_For_Tuple_List, movie_Titles_In_Dict)
-    Word_2_Vec_Model(final_List, dataset)
+    prepare_data(final_List, dataset)
 
 

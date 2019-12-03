@@ -6,3 +6,5 @@
 csvFiles/
 
 PrefaceOutput/
+
+vectorFiles/__pycache__/
