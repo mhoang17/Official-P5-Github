@@ -1,18 +1,18 @@
 from gensim.models import Word2Vec
 import time
 
+
 def train_model(sent):
-
     print('[+] Training the model')
-    start_Training = time.time()
+    start_training = time.time()
 
-    model = Word2Vec(sent, min_count=1 ,size=100, workers=8, window = 10, sg = 1)
-    
-    end_Training = time.time()
-    print('     ..Total time (s) for preparing data = ' + str(end_Training-start_Training))
+    model = Word2Vec(sent, min_count=1, size=100, workers=8, window=10, sg=1)
 
-    #similarities = model.wv.most_similar('Fred Astaire')
+    end_training = time.time()
+    print('     ..Total time (s) for preparing data = ' + str(end_training - start_training))
+
+    # similarities = model.wv.most_similar('Fred Astaire')
 
     saved_model = model.save("PrefaceOutput/word2vec.model")
-    
-    #print(model11.wv.most_similar(["actor", "Fred Astaire"], topn=11, indexer=None))
+
+    # print(model11.wv.most_similar(["actor", "Fred Astaire"], topn=11, indexer=None))

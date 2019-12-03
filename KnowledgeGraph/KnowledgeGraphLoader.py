@@ -1,20 +1,20 @@
 import pandas as pd
+import time
+
 
 def fetch_movie_list():
     with open('PrefaceOutput/movieList.txt', 'r') as f:
-        mainlist = [[line.replace('[','').replace('\n','').replace(']','').replace('\'','')] for line in f]
+        mainlist = [[line.replace('[', '').replace('\n', '').replace(']', '').replace('\'', '')] for line in f]
 
-    tmp_Frame = pd.DataFrame(mainlist, columns =['All'] )
-    movie_Frame = pd.DataFrame(tmp_Frame.All.str.split(', ', 2).tolist(), columns = ['tconst','kind', 'primaryTitle'])
-    title_dict = dict(zip(movie_Frame.tconst, movie_Frame.primaryTitle))
-    print(title_dict)
+    tmp_frame = pd.DataFrame(mainlist, columns=['All'])
+    movie_frame = pd.DataFrame(tmp_frame.All.str.split(', ', 2).tolist(), columns=['tconst', 'kind', 'primaryTitle'])
+    title_dict = dict(zip(movie_frame.tconst, movie_frame.primaryTitle))
     return title_dict
 
 
 def write_kg(file, dataset):
     principal = dataset.get('principals')
     titles_dict = fetch_movie_list()
-    #print(titles_dict[:10])
 
     # For each entry in principal, save it to the KG file with the proper relations
     for i in range(len(principal) - 1):
@@ -47,7 +47,9 @@ def write_kg(file, dataset):
             file.write(line)
             file.write(line2)
 
-def runKGL(dataset):
+
+def run_kgl(dataset):
+    start_time = time.time()
     # Create a file which is our knowledge graph and write the header
     kg = open('PrefaceOutput/knowledge_graph.csv', 'w')
     kg.write('subject\tpredicate\tobject\n')
@@ -56,3 +58,6 @@ def runKGL(dataset):
     write_kg(kg, dataset)
 
     kg.close()
+
+    end_time = time.time()
+    print('     ..Total time (s) for knowledge graph = ' + str(end_time - start_time))
