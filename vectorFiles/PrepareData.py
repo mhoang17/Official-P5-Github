@@ -6,22 +6,22 @@ from gensim.models import Word2Vec
 from nltk.tokenize import sent_tokenize, word_tokenize
 
 
-def prepare_data(final_List, csv_Data_Dict):
+def prepare_data(final_list, csv_data_dict):
     # print('\n[+] Preparing the data for model')
     # Create new dataframe with columns as features from new dataframe
-    dataframe_features = csv_Data_Dict.get('names').loc[:, ['primaryName', 'primaryProfession']]
+    dataframe_features = csv_data_dict.get('names').loc[:, ['primaryName', 'primaryProfession']]
 
     # Adding the generated list as colunm to the dataframe
-    dataframe_features['knownForTitles'] = final_List
+    dataframe_features['knownForTitles'] = final_list
 
     # Timing data preparation  
     start_pre_data = time.time()
 
     # For each row, combine all the columns into  one column
-    combo_colunm_list = dataframe_features.apply(lambda x: ','.join(x.astype(str)), axis=1)
+    combo_list = dataframe_features.apply(lambda x: ','.join(x.astype(str)), axis=1)
 
     # Store and clean in a pandas dataframe
-    df_clean = pd.DataFrame({'clean': combo_colunm_list})
+    df_clean = pd.DataFrame({'clean': combo_list})
 
     # Create the list of list format of the custom corpus for gensim modeling
     sent = [row.split(',') for row in df_clean['clean']]

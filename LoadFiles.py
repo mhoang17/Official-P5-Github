@@ -7,7 +7,7 @@ def read_files(path):
     csv_data_dict = {}
     count_of = 1
 
-    print('[+] Running files.. please wait')
+    print('\n[+] Running files.. please wait')
     start_file = time.time()  
     
     for filename in all_files:
@@ -17,9 +17,7 @@ def read_files(path):
         df = pd.read_csv(filename, header=0, low_memory=False, encoding='utf-8' )
         csv_data_dict[only_filename] = df  # .apply(lambda x: x.astype(str).str.lower())
         count_of += 1
-    end_File = time.time()
+    end_file = time.time()
     
-    print('    ... Total time reading files (s) = ' + str(end_File-start_file) + '\n')
+    print('    ... Total time reading files (s) = ' + str(end_file-start_file) + '\n')
     return csv_data_dict
-
-    

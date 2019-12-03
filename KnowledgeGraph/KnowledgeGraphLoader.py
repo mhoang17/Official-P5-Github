@@ -4,9 +4,9 @@ import time
 
 def fetch_movie_list():
     with open('PrefaceOutput/movieList.txt', 'r') as f:
-        mainlist = [[line.replace('[', '').replace('\n', '').replace(']', '').replace('\'', '')] for line in f]
+        main_list = [[line.replace('[', '').replace('\n', '').replace(']', '').replace('\'', '')] for line in f]
 
-    tmp_frame = pd.DataFrame(mainlist, columns=['All'])
+    tmp_frame = pd.DataFrame(main_list, columns=['All'])
     movie_frame = pd.DataFrame(tmp_frame.All.str.split(', ', 2).tolist(), columns=['tconst', 'kind', 'primaryTitle'])
     title_dict = dict(zip(movie_frame.tconst, movie_frame.primaryTitle))
     return title_dict
@@ -48,14 +48,14 @@ def write_kg(file, dataset):
             file.write(line2)
 
 
-def run_kgl(dataset):
+def run_kgl(data_set):
     start_time = time.time()
     # Create a file which is our knowledge graph and write the header
     kg = open('PrefaceOutput/knowledge_graph.csv', 'w')
     kg.write('subject\tpredicate\tobject\n')
 
     # Write to the KG file
-    write_kg(kg, dataset)
+    write_kg(kg, data_set)
 
     kg.close()
 
