@@ -12,8 +12,8 @@ def fetch_movie_list():
     return title_dict
 
 
-def write_kg(file, dataset):
-    principal = dataset.get('principals')
+def write_kg(file, data_set):
+    principal = data_set.get('principals')
     titles_dict = fetch_movie_list()
 
     # For each entry in principal, save it to the KG file with the proper relations

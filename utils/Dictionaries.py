@@ -16,10 +16,10 @@ def make_dict():
     dictionary = {}
 
     for i in range(len(names) - 1):
-        dictionary[names['nconst'].values[i]] = names['primaryName'].values[i].lower()
+        dictionary[names['nconst'].values[i]] = names['primaryName'].values[i]
 
     for i in range(len(titles) - 1):
-        dictionary[titles['tconst'].values[i]] = str(titles['primaryTitle'].values[i]).lower()
+        dictionary[titles['tconst'].values[i]] = str(titles['primaryTitle'].values[i])
 
     return dictionary
 
@@ -30,7 +30,7 @@ def make_persons_dict():
 
     # Load all names into the names dictionary
     for i in range(len(names) - 1):
-        names_dict[names['nconst'].values[i]] = names['primaryName'].values[i].lower()
+        names_dict[names['nconst'].values[i]] = names['primaryName'].values[i]
 
     return names_dict
 
@@ -41,6 +41,6 @@ def make_titles_dict():
 
     # Load all titles into the titles dictionary
     for i in range(len(titles) - 1):
-        titles_dict[titles['tconst'].values[i]] = str(titles['primaryTitle'].values[i]).lower()
+        titles_dict[titles['tconst'].values[i]] = str(titles['primaryTitle'].values[i])
 
     return titles_dict

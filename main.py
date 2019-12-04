@@ -3,13 +3,18 @@ from KnowledgeGraph import KGTraversal, PathProcessing, Relevance
 from PredicatesEnum import PredicatesEnum as PreEnum
 import traceback
 from QueryProcesing import QueryAnalysis, WordToKey
+from gensim.models import Word2Vec
 
+print('[+] Running main.. please wait')
 
 # Create the dictionary of all ID's and their names
 dictionary = Dictionaries.make_dict()
 
 # Convert the KG csv file to a dictionary
 kg_graph = KGTraversal.create_kg_dict()
+
+# Train the word2vec model
+model = Word2Vec.load('PrefaceOutput/word2vec.model')
 
 
 # We have a while loop that runs forever, so we don't need to reload the dictionary every time we search
@@ -26,7 +31,7 @@ while True:
         entity_predicate_list = QueryAnalysis.query_processing(user_input)
 
         # TODO: delete this print
-        print(entity_predicate_list)
+        #print(entity_predicate_list)
 
         # List of all the names/entities that occurred in the search
         names = []
@@ -43,7 +48,7 @@ while True:
         # or 'predicates' depending on what they are
         for elem in entity_predicate_list:
             # We know that idx 0 of the a list in the 'entity_predicate_list' is the name of the entity
-            string = str(elem[0]).lower()
+            string = str(elem[0])
             names.append(string)
 
             # Get the key values of the entities (tt..... : 'Kevin Hart')
@@ -54,7 +59,7 @@ while True:
             predicates.append(elem[1])
 
         # TODO: delete this prints statement
-        print(names)
+        #print(names)
 
         # List where we save all paths for all entities that starts from the entities and follows the predicates
         # (Eg. ['Tom Hanks' -> 'starred_in' -> 'Forrest Gump'] is one path that starts from
@@ -84,7 +89,7 @@ while True:
                         # This is to assure that the "translated list" is exactly that: a translated version of the
                         # list of results where everything is the same order except that instead of IDs it's
                         # the name/value of the id
-                        if result not in PreEnum.value2member_map_:
+                        if result not in PreEnum._value2member_map_:
                             translated_results.append(dictionary[result])
                         else:
                             translated_results.append(result)
@@ -100,12 +105,12 @@ while True:
         #                            'steven spielberg', 'directed', 'E.T.',...]]
 
         # TODO: delete this print
-        print("Result: ", all_paths)
+        #print("Result: ", all_paths)
 
         sec_all_paths = PathProcessing.path_sectioning(all_paths)
 
         # TODO: delete print
-        print("Combined Answer: ", sec_all_paths)
+        #print("Combined Answer: ", sec_all_paths)
 
         # The next part is necessary if paths are longer than three (eg. ['tom hanks', 'starred_in', 'forrest gump'])
         # A path can be longer than three if there are more than one predicate for that entity.
@@ -126,12 +131,11 @@ while True:
         # This we cannot use when calculating the relevance and we need to reformat it
         paths_list = PathProcessing.seperate_all_paths(predicates, sec_all_paths, names)
 
-        # TODO: change this print to be the input parameter for the relevance function
-        print(paths_list)
-
         # Find the best matching result
-        best_results = Relevance.most_relevant_path(paths_list, user_input)
-        print(best_results[len(best_results)-1])
+        best_results = Relevance.most_relevant_path(paths_list, user_input, model)
+
+        for element in best_results:
+            print(element[len(element) - 1])
 
     # TODO: change this except to catch specific expcetions
     except:

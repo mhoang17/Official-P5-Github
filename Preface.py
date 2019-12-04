@@ -14,8 +14,8 @@ def run_preface():
     print('[+] Running knowledge graph')
     KnowledgeGraphLoader.run_kgl(csv_data_dict)
     print('     ..Done with knowledge graph\n')
-
-    print('[+] Running model')
+    
+    print('\n[+] Running model')
     # PrepareData.run_Model(csv_Data_Dict)
     print('     ..Done with model')
 
