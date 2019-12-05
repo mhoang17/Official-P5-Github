@@ -74,11 +74,11 @@ def data_manipulation(actors_movie_ids_list, movie_title_ids_dict):
     return final_list
 
 
-def run_model(dataset):
+def run_model(data_set):
     # print('\n[+] Running... please wait \n')
     # path = 'csvFiles/*.csv' # use your path
     # dataset = Preface.csv_Data_Dict
-    known_for_tuple_list = actor_known_for_movies(dataset)
-    movie_titles_in_dict = movie_titles_and_ids(dataset)
+    known_for_tuple_list = actor_known_for_movies(data_set)
+    movie_titles_in_dict = movie_titles_and_ids(data_set)
     final_list = data_manipulation(known_for_tuple_list, movie_titles_in_dict)
-    prepare_data(final_list, dataset)
+    prepare_data(final_list, data_set)
