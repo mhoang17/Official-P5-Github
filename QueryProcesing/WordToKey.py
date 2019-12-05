@@ -4,7 +4,7 @@ def key_value(val, dictionary):
 
     for key, value in dictionary.items():
         # If the input value is contained in one of the names (dictionary value) then the key to the name is saved
-        if val in value:
+        if val == value:
             key_list.append(key)
 
     return key_list
