@@ -29,11 +29,11 @@ def query_processing(str):
     doc = nlp(new_string)
     matcher = Matcher(nlp.vocab)
 
-    triples = []
+    pos = []
 
-    triples2 = extract_triple(matcher, triples, doc)
+    pos2 = extract_pos(matcher, pos, doc)
 
-    search_words = verb_adp(triples2)
+    search_words = verb_adp(pos2)
 
     new_search_words = re_merge(position, search_words)
 
@@ -47,7 +47,7 @@ def query_processing(str):
     return query
 
 
-def extract_triple(matcher, triples, nlp_doc):
+def extract_pos(matcher, pos, nlp_doc):
     matcher.add('NOUN', None, [{'POS': 'NOUN'}])
     matcher.add('NAME', None, [{'POS': 'PROPN'}, {'POS': 'PROPN'}])
     matcher.add('VERB', None, [{'POS': 'VERB'}])
@@ -56,8 +56,8 @@ def extract_triple(matcher, triples, nlp_doc):
     matches = matcher(nlp_doc)
     for match_id, start, end in matches:
         span = nlp_doc[start:end]
-        triples.append(span.text)
-    return triples
+        pos.append(span.text)
+    return pos
 
 
 def verb_adp(triples):
