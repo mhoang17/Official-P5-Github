@@ -17,7 +17,6 @@ def most_relevant_path(paths, question, model):
 
     # Find the highest relevance value and find the index of it
     for x in range(10):
-
         max_element = max(relatedness)
         print(max_element)
         max_elem_id = relatedness.index(max_element)
@@ -58,6 +57,7 @@ def relevance_part(label, question, model):
     # Return the highest value of the similarities (eg. Jumanji will be very similar in a search with Dwayne Johnson,
     # but maybe not as high for another actor but will still have a similarity value)
     return max(similarities)
+
 
 """
 model = Word2Vec.load('PrefaceOutput/word2vec.model')

@@ -16,7 +16,6 @@ kg_graph = KGTraversal.create_kg_dict()
 # Train the word2vec model
 model = Word2Vec.load('PrefaceOutput/word2vec.model')
 
-
 # We have a while loop that runs forever, so we don't need to reload the dictionary every time we search
 while True:
 
@@ -31,7 +30,7 @@ while True:
         entity_predicate_list = QueryAnalysis.query_processing(user_input)
 
         # TODO: delete this print
-        #print(entity_predicate_list)
+        # print(entity_predicate_list)
 
         # List of all the names/entities that occurred in the search
         names = []
@@ -59,7 +58,7 @@ while True:
             predicates.append(elem[1])
 
         # TODO: delete this prints statement
-        #print(names)
+        # print(names)
 
         # List where we save all paths for all entities that starts from the entities and follows the predicates
         # (Eg. ['Tom Hanks' -> 'starred_in' -> 'Forrest Gump'] is one path that starts from
@@ -105,12 +104,12 @@ while True:
         #                            'steven spielberg', 'directed', 'E.T.',...]]
 
         # TODO: delete this print
-        #print("Result: ", all_paths)
+        # print("Result: ", all_paths)
 
         sec_all_paths = PathProcessing.path_sectioning(all_paths)
 
         # TODO: delete print
-        #print("Combined Answer: ", sec_all_paths)
+        # print("Combined Answer: ", sec_all_paths)
 
         # The next part is necessary if paths are longer than three (eg. ['tom hanks', 'starred_in', 'forrest gump'])
         # A path can be longer than three if there are more than one predicate for that entity.

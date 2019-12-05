@@ -1,5 +1,4 @@
 def path_sectioning(all_paths):
-
     # This is a list where the list of all paths is sectioned up into pieces.
     # (Eg. [['tom hanks', 'starred_in', 'forrest gump'], ['tom hanks', 'starred_in', 'the green mile'],...]
     # This is necessary to do in order for all paths to be separated and therefore we are easier able to find the
@@ -85,7 +84,7 @@ def seperate_all_paths(predicates, sec_all_paths, names):
                         k = len(predicate) - 1
 
             # If we found a path then we will add it
-            if len(path) == len(predicate)*2+1:
+            if len(path) == len(predicate) * 2 + 1:
                 # Reverse it so it will be in the correct order
                 path.reverse()
                 paths_list.append(path)

@@ -7,7 +7,6 @@ nlp = spacy.load("en_core_web_sm")
 
 
 def query_processing(str):
-
     # Split the string in quotation from the rest of the string
     str_split = shlex.split(str, posix=True)
 
@@ -84,7 +83,6 @@ def verb_adp(triples):
 
 
 def re_merge(position, searchWords):
-
     new_search_words = []
     i = 0
     for element in position:

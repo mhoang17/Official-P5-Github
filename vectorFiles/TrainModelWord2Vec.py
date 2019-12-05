@@ -6,7 +6,7 @@ def train_model(sent):
     print('[+] Training the model')
     start_training = time.time()
 
-    model = Word2Vec(sent, min_count=1 ,size=100, workers=4, window = 7, sg = 1)
+    model = Word2Vec(sent, min_count=1, size=100, workers=4, window=7, sg=1)
 
     end_training = time.time()
     print('     ..Total time (s) for preparing data = ' + str(end_training - start_training))
