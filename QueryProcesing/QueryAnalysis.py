@@ -39,7 +39,7 @@ def query_processing(str):
     predicates(new_search_words)
 
     # Reverse the list so we can correctly bind things
-    new_search_words.reverse()
+    # new_search_words.reverse()
 
     query = result(new_search_words)
 
@@ -108,7 +108,7 @@ def predicates(new_search_words):
                 new_search_words[i] = [pe.STARRED_IN.value, pe.HAS_ACTOR.value]
             else:
                 new_search_words[i] = [pe.STARRED_IN.value]
-        elif "starred" in element or "played" in element:
+        elif "star" in element or "appear" in element or "act" in element :
             new_search_words[i] = [pe.STARRED_IN.value]
         elif "made" in element or "directed" in element:
             new_search_words[i] = [pe.DIRECTED.value]
@@ -124,7 +124,7 @@ def result(new_search_words):
         element_list = new_search_words[i]
         # We will only append things that have pairs. So if we find a predicate, then it will not be looked at because
         # a valid entry has to start with a word (eg. Spielberg)
-        if type(element_list) is not list and element_list != 'and':
+        if type(element_list) is not list and element_list != 'and' and "movie" not in element_list and "film" not in element_list:
             # Now we want to find the predicates
             for j in range(i, len(new_search_words)):
                 # If the type of the element is list then it means it is a collection of predicates
