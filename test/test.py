@@ -15,6 +15,7 @@ def load_files():
 file = load_files()
 
 test_results = open("test_results.csv", "w+")
+test_results_kg = open("test_results_kg.csv", "w+")
 
 print('[+] Make Dictionaries')
 dictionary = Dictionaries.make_dict()
@@ -80,33 +81,83 @@ for question in file[0]:
         sec_all_paths = PathProcessing.path_sectioning(all_paths)
         paths_list = PathProcessing.seperate_all_paths(predicates, sec_all_paths, names)
 
+
+
+
+        count1 = 0
+
+        top_ten_kg = []
+        placement = 0
+        placement_list = []
+
+        if len(paths_list) >= 10:
+            for i in range(10):
+                top_ten_kg.append(paths_list[i][len(paths_list[i]) - 1])
+        else:
+            for path in paths_list:
+                top_ten_kg.append(path[len(path) - 1])
+
+        for answer in answers:
+            if answer in top_ten_kg:
+                placement += top_ten_kg.index(answer)+1
+                placement_list.append(top_ten_kg.index(answer)+1)
+                count1 += 1
+
+        if count1 != 0:
+            percentage = count1 / len(answers)
+            placement = placement / count1
+        else:
+            percentage = 0.0
+
+        print("Knowledge graph")
+        print("Percentage: ", percentage, " Question: ", question)
+        print("Their answers: ", answers)
+        print("Our answers: ", top_ten_kg)
+        print("Placements: ", placement_list, " Average placement: ", placement)
+
+        test_results_kg.write(
+            question + "\t" + str(len(answers)) + "\t" + str(len(top_ten_kg)) + "\t"
+            + str(percentage) + "\t" + str(placement_list) + "\t" + str(placement) + "\n")
+
+
+
+
         # Find the best matching result
         best_results = Relevance.most_relevant_path(paths_list, question, model)
 
         top_ten = []
+        placement = 0
+        placement_list = []
 
         for element in best_results:
             top_ten.append(element[len(element) - 1])
 
-        count = 0
+        count2 = 0
 
         for answer in answers:
             if answer in top_ten:
-                count += 1
+                placement += top_ten.index(answer) + 1
+                placement_list.append(top_ten.index(answer) + 1)
+                count2 += 1
 
-        if count != 0:
-            percentage = count/len(answers)
+        if count2 != 0:
+            percentage = count2/len(answers)
+            placement = placement / count2
         else:
             percentage = 0.0
 
+        print("Relevance")
         print("Percentage: ", percentage, " Question: ", question)
         print("Their answers: ", answers)
-        print("Our answers: ", top_ten, "\n")
+        print("Our answers: ", top_ten)
+        print("Placements: ", placement_list, " Average placement: ", placement, "\n")
 
-        test_results.write(question + "\t" + str(len(answers)) + "\t" + str(len(top_ten)) + "\t" + str(percentage) + "\n")
+        test_results.write(question + "\t" + str(len(answers)) + "\t" + str(len(top_ten)) + "\t"
+                           + str(percentage) + "\t" + str(placement_list) + "\t" + str(placement) + "\n")
 
     except:
         traceback.print_exc()
         continue
 
+test_results_kg.close()
 test_results.close()

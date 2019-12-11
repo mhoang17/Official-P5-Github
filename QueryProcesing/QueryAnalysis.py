@@ -26,6 +26,7 @@ def query_processing(str):
         position[str_split.index(element)] = element
 
     doc = nlp(new_string)
+
     matcher = Matcher(nlp.vocab)
 
     pos = []
