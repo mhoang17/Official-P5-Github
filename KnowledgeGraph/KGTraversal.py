@@ -5,7 +5,7 @@ from collections import defaultdict
 # Function to create the dictionary. The dictionary per_subject is represented as a dictionary of lists
 def create_kg_dict():
     per_subject = defaultdict(list)
-    with open('PrefaceOutput/knowledge_graph.csv') as input_file:
+    with open('../PrefaceOutput/knowledge_graph.csv') as input_file:
         reader = csv.reader(input_file, delimiter="\t")
         next(reader, None)  # Ensures that we skip the header in the knowledge_graph.csv
         for row_num, row_list in enumerate(reader, start=1):

@@ -13,15 +13,22 @@ def most_relevant_path(paths, question, model):
     for path in paths:
         relatedness.append(relevance(path, question, model))
 
-    print(relatedness)
-
     # Find the highest relevance value and find the index of it
-    for x in range(10):
-        max_element = max(relatedness)
-        print(max_element)
-        max_elem_id = relatedness.index(max_element)
-        new_list.append(paths[max_elem_id])
-        relatedness.pop(max_elem_id)
+    if len(paths) >= 10:
+        for x in range(10):
+            max_element = max(relatedness)
+            max_elem_id = relatedness.index(max_element)
+            new_list.append(paths[max_elem_id])
+            relatedness.pop(max_elem_id)
+            paths.pop(max_elem_id)
+
+    else:
+        for x in range(len(paths)):
+            max_element = max(relatedness)
+            max_elem_id = relatedness.index(max_element)
+            new_list.append(paths[max_elem_id])
+            relatedness.pop(max_elem_id)
+            paths.pop(max_elem_id)
 
     # Return the path with the highest relevance
     return new_list
