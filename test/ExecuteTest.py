@@ -147,6 +147,7 @@ test_dataset = load_files()
 # Files load
 #test_results_kg = open("test.csv", "w+")
 test_results = open("test.csv", "w+")
+time_results = open("test_time.csv", "w+")
 
 # Load model
 print('[+] Make Model')
@@ -165,11 +166,14 @@ print('     ..Done with KG\n')
 
 
 answer_idx = 0
+
 for question in test_dataset[0]:
     try:
         # Answers to the question from dataset
         answers = test_dataset[1][answer_idx].split(", ")
         answer_idx += 1
+
+        start_time = time.time()
 
         entity_predicate_list = QueryAnalysis.query_processing(question)
 
@@ -190,6 +194,10 @@ for question in test_dataset[0]:
         # print("Relevance calculated")
         test_relevance(answers, paths_list, test_results, model, question)
 
+        end_time = time.time()
+        time_spent = end_time - start_time
+        print("Time spent in seconds: ", time_spent)
+        time_results.write(str(time_spent))
 
     except:
         traceback.print_exc()
@@ -197,6 +205,6 @@ for question in test_dataset[0]:
 
 #test_results_kg.close()
 test_results.close()
-
+time_results.close()
 
 
