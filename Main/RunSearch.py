@@ -47,7 +47,7 @@ while True:
             string = str(elem[0])
             names.append(string)
 
-            # Get the key values of the entities (tt..... : 'Kevin Hart')
+            # Get the key values of the entities (nm..... : 'Kevin Hart')
             keys = WordToKey.key_value(string, dictionary)
             entities_list.append(keys)
 

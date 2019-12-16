@@ -1,5 +1,4 @@
 import time
-
 import pandas as pd
 import traceback
 from random import choice
@@ -28,7 +27,7 @@ def run_main(en_pred_list):
         string = str(elem[0])
         names.append(string)
 
-        # Get the key values of the entities (tt..... : 'Kevin Hart')
+        # Get the key values of the entities (nm..... : 'Kevin Hart')
         keys = WordToKey.key_value(string, dictionary)
         entities_list.append(keys)
 
@@ -166,7 +165,6 @@ print('     ..Done with KG\n')
 
 
 answer_idx = 0
-start_time = time.time()
 for question in test_dataset[0]:
     try:
         # Answers to the question from dataset
@@ -189,15 +187,13 @@ for question in test_dataset[0]:
         # test_kg(answers, paths_list, test_results_kg)
 
         # Find the best matching result
-        print("Relevance calculated")
+        # print("Relevance calculated")
         test_relevance(answers, paths_list, test_results, model, question)
+
 
     except:
         traceback.print_exc()
         continue
-
-end_time = time.time()
-print('     ..Total time (s) for testing = ' + str(end_time - start_time))
 
 #test_results_kg.close()
 test_results.close()

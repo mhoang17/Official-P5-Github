@@ -1,3 +1,4 @@
+import time
 from gensim.models import Word2Vec
 from KnowledgeGraph import Relevance, KGTraversal, PathProcessing
 from PredicatesEnum import PredicatesEnum as PreEnum

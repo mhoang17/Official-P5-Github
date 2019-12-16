@@ -43,8 +43,8 @@ def query_processing(query):
     # We find the proper predicates for a query
     predicates(new_search_words)
 
-    # Reverse the list so we can correctly bind things
-    new_search_words.reverse()
+    # Comment this in to reverse the list so we can correctly bind things
+    # new_search_words.reverse()
 
     query = result(new_search_words)
 
