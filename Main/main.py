@@ -29,9 +29,6 @@ while True:
         # (Eg. [['Tom Hanks', [starred_in]], ['Steven Spielberg',[directed]]])
         entity_predicate_list = QueryAnalysis.query_processing(user_input)
 
-        # TODO: delete this print
-        # print(entity_predicate_list)
-
         # List of all the names/entities that occurred in the search
         names = []
 
@@ -56,9 +53,6 @@ while True:
 
             # We know that idx 1 of the a list in the 'entity_predicate_list' is the predicates belonging to the entity
             predicates.append(elem[1])
-
-        # TODO: delete this prints statement
-        # print(names)
 
         # List where we save all paths for all entities that starts from the entities and follows the predicates
         # (Eg. ['Tom Hanks' -> 'starred_in' -> 'Forrest Gump'] is one path that starts from
@@ -102,14 +96,7 @@ while True:
         #                            'tom hanks', 'starred_in', 'the green mile',...],
         #                           ['steven spielberg', 'directed', 'jurassic park',
         #                            'steven spielberg', 'directed', 'E.T.',...]]
-
-        # TODO: delete this print
-        # print("Result: ", all_paths)
-
         sec_all_paths = PathProcessing.path_sectioning(all_paths)
-
-        # TODO: delete print
-        # print("Combined Answer: ", sec_all_paths)
 
         # The next part is necessary if paths are longer than three (eg. ['tom hanks', 'starred_in', 'forrest gump'])
         # A path can be longer than three if there are more than one predicate for that entity.
@@ -136,7 +123,7 @@ while True:
         for element in best_results:
             print(element[len(element) - 1])
 
-    # TODO: change this except to catch specific expcetions
     except:
         traceback.print_exc()
+        print("A problem occurred while your search ran. Please try again.")
         continue
