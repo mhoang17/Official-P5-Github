@@ -13,6 +13,8 @@ def most_relevant_path(paths, question, model):
     for path in paths:
         relatedness.append(relevance(path, question, model))
 
+    print("Relatedness: ", relatedness)
+
     # Find the highest relevance value and find the index of it
     if len(paths) >= 10:
         for x in range(10):
