@@ -1,12 +1,13 @@
-from random import choice
+import time
 
 import pandas as pd
+import traceback
+from random import choice
 from KnowledgeGraph import KGTraversal, PathProcessing, Relevance
 from QueryProcesing import QueryAnalysis, WordToKey
 from utils import Dictionaries
 from gensim.models import Word2Vec
 from PredicatesEnum import PredicatesEnum as PreEnum
-import traceback
 
 
 # Load training data
@@ -16,14 +17,14 @@ def load_files():
 
 
 # The main run through
-def run_main(question):
-    entity_predicate_list = QueryAnalysis.query_processing(question)
+def run_main(en_pred_list):
+
     names = []
     entities_list = []
     predicates = []
 
-    for elem in entity_predicate_list:
-        # We know that idx 0 of the a list in the 'entity_predicate_list' is the name of the entity
+    for elem in en_pred_list:
+        # We know that idx 0 of the a list in the 'en_pred_list' is the name of the entity
         string = str(elem[0])
         names.append(string)
 
@@ -31,7 +32,7 @@ def run_main(question):
         keys = WordToKey.key_value(string, dictionary)
         entities_list.append(keys)
 
-        # We know that idx 1 of the a list in the 'entity_predicate_list' is the predicates belonging to the entity
+        # We know that idx 1 of the a list in the 'en_pred_list' is the predicates belonging to the entity
         predicates.append(elem[1])
 
     all_paths = []
@@ -130,8 +131,8 @@ def test_kg(answers, paths, file):
 
 
 # Test relevance
-def test_relevance(answers, paths, file, model):
-    best_results = Relevance.most_relevant_path(paths, question, model)
+def test_relevance(answers, paths, file, model, query):
+    best_results = Relevance.most_relevant_path(paths, query, model)
 
     top_results = []
 
@@ -145,8 +146,8 @@ def test_relevance(answers, paths, file, model):
 test_dataset = load_files()
 
 # Files load
-test_results_kg = open("test.csv", "w+")
-test_results = open("test_results_old.csv", "w+")
+#test_results_kg = open("test.csv", "w+")
+test_results = open("test.csv", "w+")
 
 # Load model
 print('[+] Make Model')
@@ -165,15 +166,17 @@ print('     ..Done with KG\n')
 
 
 answer_idx = 0
-
+start_time = time.time()
 for question in test_dataset[0]:
     try:
         # Answers to the question from dataset
         answers = test_dataset[1][answer_idx].split(", ")
         answer_idx += 1
 
+        entity_predicate_list = QueryAnalysis.query_processing(question)
+
         # Finds paths
-        paths_list = run_main(question)
+        paths_list = run_main(entity_predicate_list)
 
         # Comment this in if we want to randomize paths
         # paths_list = randomize_paths(paths_list)
@@ -182,17 +185,22 @@ for question in test_dataset[0]:
         # paths_list.reverse()
 
         # Comment this in to test the kg
-        print("Knowledge graph")
-        test_kg(answers, paths_list, test_results_kg)
+        # print("Knowledge graph")
+        # test_kg(answers, paths_list, test_results_kg)
 
         # Find the best matching result
         print("Relevance calculated")
-        test_relevance(answers, paths_list, test_results, model)
+        test_relevance(answers, paths_list, test_results, model, question)
 
     except:
         traceback.print_exc()
         continue
 
-test_results_kg.close()
+end_time = time.time()
+print('     ..Total time (s) for testing = ' + str(end_time - start_time))
+
+#test_results_kg.close()
 test_results.close()
+
+
 

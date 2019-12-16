@@ -3,7 +3,7 @@ from random import randrange
 import pandas as pd
 from collections import defaultdict
 
-results = pd.read_csv("test_results_kg_reversed.csv", sep="\t", header=None)
+results = pd.read_csv("test_results_window_2_principal.csv", sep="\t", header=None)
 
 # The different columns in the file
 answer_num = results[1]
@@ -21,7 +21,6 @@ for number in answer_num:
 
 # A list of the placements in the file
 placement_list = []
-count = 0
 
 for elem in answer_placement_list:
     elem_list = list(elem)
@@ -94,7 +93,7 @@ for value in answer_placement:
 
 print("Placement of candidate answers in our answer:        ", round(avg_place/count, 2))
 
-
+count = 0
 # Check how many times a candidate answer lies at top
 for value in placement_list:
     if int(value) == 1:

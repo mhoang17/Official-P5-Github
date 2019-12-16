@@ -26,7 +26,7 @@ def find_all_paths(graph, start, edges, visited_nodes, j):
     for i in range(len(subject_values) - 1):
         #  If the edge that is outgoing from the subject is equal to the edge that is supposed to be "visited"
         #  then we should visit the object
-        if subject_values[i] == edges[j] and i != len(subject_values):
+        if subject_values[i] == edges[j]:
             i += 1
             #  If the current node has not been visited before, it will be added to the path
             #  and to the list of the visited nodes
