@@ -6,7 +6,7 @@ from KnowledgeGraph import KGTraversal, Relevance
 from QueryProcesing import QueryAnalysis
 from utils import Dictionaries
 from gensim.models import Word2Vec
-from Main import UserSearch
+from KnowledgeGraph import RunSearch
 
 
 # Load training data
@@ -88,10 +88,10 @@ def test_relevance(cand_answer, paths, file, w2v_model, query):
     count_cal_write(cand_answer, top_results, file)
 
 
-# Load test data
+# Load Test data
 test_dataset = load_files()
 
-# test_results_kg = open("test.csv", "w+")
+# test_results_kg = open("Test.csv", "w+")
 test_results = open("test.csv", "w+")
 time_results = open("test_time.csv", "w+")
 
@@ -121,10 +121,12 @@ for question in test_dataset[0]:
 
         start_time = time.time()
 
+        # Find the entities and predicates
+        # Remember to comment our the reverse function in the query_processing function
         entity_predicate_list = QueryAnalysis.query_processing(question)
 
         # Finds paths
-        paths_list = UserSearch.find_all_paths(entity_predicate_list, dictionary, kg_graph)
+        paths_list = RunSearch.find_all_paths(entity_predicate_list, dictionary, kg_graph)
 
         # Comment this in if we want to randomize paths
         # paths_list = randomize_paths(paths_list)
@@ -132,7 +134,7 @@ for question in test_dataset[0]:
         # Comment this in if we want to reverse paths
         # paths_list.reverse()
 
-        # Comment this in to test the kg
+        # Comment this in to Test the kg
         # print("Knowledge graph")
         # test_kg(answers, paths_list, test_results_kg)
 
