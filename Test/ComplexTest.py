@@ -2,7 +2,7 @@ from gensim.models import Word2Vec
 from KnowledgeGraph import Relevance, KGTraversal
 from PredicatesEnum import PredicatesEnum as PreEnum
 from utils import Dictionaries
-from Main import UserSearch
+from KnowledgeGraph import RunSearch
 
 
 # Load model
@@ -26,7 +26,7 @@ entity_predicates = [["M. Night", [PreEnum.DIRECTED.value, PreEnum.HAS_ACTOR.val
                      ["X-Men", [PreEnum.HAS_ACTOR.value, PreEnum.STARRED_IN.value]]]
 
 # Find all paths
-paths = UserSearch.find_all_paths(entity_predicates, dictionary, kg_graph)
+paths = RunSearch.find_all_paths(entity_predicates, dictionary, kg_graph)
 
 # Find the best results
 best_results = Relevance.most_relevant_path(paths, question, model)
