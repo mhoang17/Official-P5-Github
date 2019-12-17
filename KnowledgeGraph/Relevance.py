@@ -1,5 +1,3 @@
-import numpy as np
-from gensim.models import Word2Vec
 from PredicatesEnum import PredicatesEnum as PreEnum
 
 
