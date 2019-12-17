@@ -1,6 +1,6 @@
 from KnowledgeGraph import KnowledgeGraphLoader
 from utils import MovieList
-from vectorFiles import PrepareData
+from VectorFiles import PrepareData
 import LoadFiles
 
 
