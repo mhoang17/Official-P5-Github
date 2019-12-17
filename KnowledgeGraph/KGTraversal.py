@@ -5,7 +5,7 @@ from collections import defaultdict
 # Function to create the dictionary. The dictionary per_subject is represented as a dictionary of lists
 def create_kg_dict():
     per_subject = defaultdict(list)
-    with open('PrefaceOutput/knowledge_graph.csv') as input_file:
+    with open('../PrefaceOutput/knowledge_graph.csv') as input_file:
         reader = csv.reader(input_file, delimiter="\t")
         next(reader, None)  # Ensures that we skip the header in the knowledge_graph.csv
         for row_num, row_list in enumerate(reader, start=1):
@@ -26,7 +26,7 @@ def find_all_paths(graph, start, edges, visited_nodes, j):
     for i in range(len(subject_values) - 1):
         #  If the edge that is outgoing from the subject is equal to the edge that is supposed to be "visited"
         #  then we should visit the object
-        if subject_values[i] == edges[j] and i != len(subject_values):
+        if subject_values[i] == edges[j]:
             i += 1
             #  If the current node has not been visited before, it will be added to the path
             #  and to the list of the visited nodes

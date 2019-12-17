@@ -6,9 +6,9 @@ import shlex
 nlp = spacy.load("en_core_web_sm")
 
 
-def query_processing(str):
+def query_processing(query):
     # Split the string in quotation from the rest of the string
-    str_split = shlex.split(str, posix=True)
+    str_split = shlex.split(query, posix=True)
 
     # Create string which we analyse the word classes and which word should be converted into one
     # ('worked' 'with' becomes 'worked with')
@@ -25,28 +25,35 @@ def query_processing(str):
         # Add to dictionary
         position[str_split.index(element)] = element
 
+    # We analyse the query
     doc = nlp(new_string)
+
+    # The pattern matcher
     matcher = Matcher(nlp.vocab)
 
-    triples = []
+    # We find the part of speech tags of the different words
+    pos = extract_pos(matcher, doc)
 
-    triples2 = extract_triple(matcher, triples, doc)
+    # Find words that should be seen together
+    search_words = verb_adp(pos)
 
-    search_words = verb_adp(triples2)
-
+    # We re-merge the elements which are in quotation with the words we have found the tags of
     new_search_words = re_merge(position, search_words)
 
+    # We find the proper predicates for a query
     predicates(new_search_words)
 
-    # Reverse the list so we can correctly bind things
-    new_search_words.reverse()
+    # Comment this in to reverse the list so we can correctly bind things
+    # Need to be commented out for the test
+    # new_search_words.reverse()
 
     query = result(new_search_words)
 
     return query
 
 
-def extract_triple(matcher, triples, nlp_doc):
+def extract_pos(matcher, nlp_doc):
+    pos = []
     matcher.add('NOUN', None, [{'POS': 'NOUN'}])
     matcher.add('NAME', None, [{'POS': 'PROPN'}, {'POS': 'PROPN'}])
     matcher.add('VERB', None, [{'POS': 'VERB'}])
@@ -55,8 +62,8 @@ def extract_triple(matcher, triples, nlp_doc):
     matches = matcher(nlp_doc)
     for match_id, start, end in matches:
         span = nlp_doc[start:end]
-        triples.append(span.text)
-    return triples
+        pos.append(span.text)
+    return pos
 
 
 def verb_adp(triples):
@@ -108,7 +115,7 @@ def predicates(new_search_words):
                 new_search_words[i] = [pe.STARRED_IN.value, pe.HAS_ACTOR.value]
             else:
                 new_search_words[i] = [pe.STARRED_IN.value]
-        elif "starred" in element or "played" in element:
+        elif "star" in element or "appear" in element or "act" in element :
             new_search_words[i] = [pe.STARRED_IN.value]
         elif "made" in element or "directed" in element:
             new_search_words[i] = [pe.DIRECTED.value]
@@ -124,7 +131,7 @@ def result(new_search_words):
         element_list = new_search_words[i]
         # We will only append things that have pairs. So if we find a predicate, then it will not be looked at because
         # a valid entry has to start with a word (eg. Spielberg)
-        if type(element_list) is not list and element_list != 'and':
+        if type(element_list) is not list and element_list != 'and' and "movie" not in element_list and "film" not in element_list:
             # Now we want to find the predicates
             for j in range(i, len(new_search_words)):
                 # If the type of the element is list then it means it is a collection of predicates

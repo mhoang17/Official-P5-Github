@@ -1,7 +1,3 @@
-import glob
-import pandas as pd
-import time
-
 
 # Takes 3 columns and return a list with only movies.
 def create_movie_list(csv_data_dict):
@@ -38,4 +34,4 @@ def run_movie_list(dataset):
     # csvDataDict = Preface.csv_Data_Dict
     movie_list = create_movie_list(dataset)
     # Calling the function and giving it the name.
-    write_to_file('PrefaceOutput/movie_list.txt', movie_list)
+    write_to_file('../PrefaceOutput/movie_list.txt', movie_list)
