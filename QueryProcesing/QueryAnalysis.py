@@ -6,9 +6,9 @@ import shlex
 nlp = spacy.load("en_core_web_sm")
 
 
-def query_processing(str):
+def query_processing(query):
     # Split the string in quotation from the rest of the string
-    str_split = shlex.split(str, posix=True)
+    str_split = shlex.split(query, posix=True)
 
     # Create string which we analyse the word classes and which word should be converted into one
     # ('worked' 'with' becomes 'worked with')
@@ -25,20 +25,25 @@ def query_processing(str):
         # Add to dictionary
         position[str_split.index(element)] = element
 
+    # We analyse the query
     doc = nlp(new_string)
+
+    # The pattern matcher
     matcher = Matcher(nlp.vocab)
 
-    pos = []
+    # We find the part of speech tags of the different words
+    pos = extract_pos(matcher, doc)
 
-    pos2 = extract_pos(matcher, pos, doc)
+    # Find words that should be seen together
+    search_words = verb_adp(pos)
 
-    search_words = verb_adp(pos2)
-
+    # We re-merge the elements which are in quotation with the words we have found the tags of
     new_search_words = re_merge(position, search_words)
 
+    # We find the proper predicates for a query
     predicates(new_search_words)
 
-    # Reverse the list so we can correctly bind things
+    # Comment this in to reverse the list so we can correctly bind things
     # new_search_words.reverse()
 
     query = result(new_search_words)
@@ -46,7 +51,8 @@ def query_processing(str):
     return query
 
 
-def extract_pos(matcher, pos, nlp_doc):
+def extract_pos(matcher, nlp_doc):
+    pos = []
     matcher.add('NOUN', None, [{'POS': 'NOUN'}])
     matcher.add('NAME', None, [{'POS': 'PROPN'}, {'POS': 'PROPN'}])
     matcher.add('VERB', None, [{'POS': 'VERB'}])

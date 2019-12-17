@@ -31,18 +31,18 @@ def write_kg(file, data_set):
 
             # If actor or actress
             if category == "actor" or category == "actress":
-                line = person_id + "\t" + pe.STARRED_IN + "\t" + movie_id + "\n"
-                line2 = movie_id + "\t" + pe.HAS_ACTOR + "\t" + person_id + "\n"
+                line = person_id + "\t" + pe.STARRED_IN.value + "\t" + movie_id + "\n"
+                line2 = movie_id + "\t" + pe.HAS_ACTOR.value + "\t" + person_id + "\n"
 
             # If director
             elif category == "director":
-                line = person_id + "\t" + pe.DIRECTED + "\t" + movie_id + "\n"
-                line2 = movie_id + "\t" + pe.HAS_DIRECTOR + "\t" + person_id + "\n"
+                line = person_id + "\t" + pe.DIRECTED.value + "\t" + movie_id + "\n"
+                line2 = movie_id + "\t" + pe.HAS_DIRECTOR.value + "\t" + person_id + "\n"
 
             # If writer
             elif category == "writer":
-                line = person_id + "\t" + pe.WROTE + "\t" + movie_id + "\n"
-                line2 = movie_id + "\t" + pe.HAS_WRITER + "\t" + person_id + "\n"
+                line = person_id + "\t" + pe.WROTE.value + "\t" + movie_id + "\n"
+                line2 = movie_id + "\t" + pe.HAS_WRITER.value + "\t" + person_id + "\n"
 
             # Write to file
             file.write(line)
