@@ -1,7 +1,7 @@
 import glob, time, os
 import pandas as pd
 import gensim
-from vectorFiles import TrainModelWord2Vec
+from VectorFiles import TrainModelWord2Vec
 from gensim.models import Word2Vec
 from nltk.tokenize import sent_tokenize, word_tokenize
 
