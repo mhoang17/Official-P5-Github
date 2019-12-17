@@ -2,6 +2,7 @@ from KnowledgeGraph import KGTraversal, PathProcessing
 from PredicatesEnum import PredicatesEnum as PreEnum
 from QueryProcesing import WordToKey
 
+
 # Find all paths
 def find_all_paths(en_pred_list, dictionary, kg_graph):
     # List of all the names/entities that occurred in the search
