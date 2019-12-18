@@ -74,8 +74,8 @@ def find_all_paths(en_pred_list, dictionary, kg_graph):
     #                            'steven spielberg', 'directed', 'E.T.',...]]
     sec_all_paths = PathProcessing.path_sectioning(all_paths)
 
-    # The next part is necessary if paths are longer than three (eg. ['tom hanks', 'starred_in', 'forrest gump'])
-    # A path can be longer than three if there are more than one predicate for that entity.
+    # The next part is necessary if paths are longer
+    # A path is seen as longer if there are more than one predicate for an entity.
     # Eg. actor who worked with Kevin Hart will result in for example
     # entities_predicate_list = ['Kevin Hart', ['starred_in', 'has_actor']]
     # all_paths = ['Kevin Hart', 'starred_in', 'Central Intelligence',
