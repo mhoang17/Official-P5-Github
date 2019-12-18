@@ -4,7 +4,7 @@ from PredicatesEnum import PredicatesEnum as PreEnum
 
 
 # Open file
-file = open("VectorFiles/principal_restructured.txt", "w")
+file = open("../VectorFiles/principal_restructured.txt", "w")
 
 # Create knowledge graph
 knowledge_graph = KGTraversal.create_kg_dict()

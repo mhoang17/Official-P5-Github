@@ -6,10 +6,13 @@ from VectorFiles import TrainModelWord2Vec
 def prepare_data(final_list, csv_data_dict):
     # print('\n[+] Preparing the data for model')
     # Create new dataframe with columns as features from new dataframe
-    dataframe_features = csv_data_dict.get('names').loc[:, ['primaryName', 'primaryProfession']]
+    #dataframe_features = csv_data_dict.get('names').loc[:, ['primaryName', 'primaryProfession']]
 
     # Adding the generated list as colunm to the dataframe
-    dataframe_features['knownForTitles'] = final_list
+    #dataframe_features['knownForTitles'] = final_list
+
+    # Comment the line below out to create the large model
+    dataframe_features = csv_data_dict.get('pr')
 
     # Timing data preparation  
     start_pre_data = time.time()
