@@ -1,4 +1,3 @@
-
 # Takes 3 columns and return a list with only movies.
 def create_movie_list(csv_data_dict):
     title_type_list = []
@@ -20,8 +19,6 @@ def create_movie_list(csv_data_dict):
             movie_list.append(ph_list1)
     return movie_list
 
-
-# movieList = createMovielist(csvDataDict)
 
 # Writes to a file by giving the function the name for the file and the data
 def write_to_file(name, data):

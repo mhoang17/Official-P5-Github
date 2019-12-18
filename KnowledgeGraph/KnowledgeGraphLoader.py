@@ -4,7 +4,7 @@ from PredicatesEnum import PredicatesEnum as pe
 
 
 def fetch_movie_list():
-    with open('PrefaceOutput/movie_list.txt', 'r') as f:
+    with open('../PrefaceOutput/movie_list.txt', 'r') as f:
         main_list = [[line.replace('[', '').replace('\n', '').replace(']', '').replace('\'', '')] for line in f]
 
     tmp_frame = pd.DataFrame(main_list, columns=['All'])
@@ -52,7 +52,7 @@ def write_kg(file, data_set):
 def run_kgl(data_set):
     start_time = time.time()
     # Create a file which is our knowledge graph and write the header
-    kg = open('PrefaceOutput/knowledge_graph.csv', 'w')
+    kg = open('../PrefaceOutput/knowledge_graph.csv', 'w')
     kg.write('subject\tpredicate\tobject\n')
 
     # Write to the KG file
