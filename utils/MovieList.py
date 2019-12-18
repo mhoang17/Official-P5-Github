@@ -1,7 +1,3 @@
-import glob
-import pandas as pd
-import time
-
 
 # Takes 3 columns and return a list with only movies.
 def create_movie_list(csv_data_dict):

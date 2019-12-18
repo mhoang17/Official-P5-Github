@@ -31,11 +31,13 @@ while True:
         # (Eg. [['Tom Hanks', [starred_in]], ['Steven Spielberg',[directed]]])
         entity_predicate_list = QueryAnalysis.query_processing(user_input)
 
+        # Call the first-class object find_all_paths
         paths_list = RunSearch.find_all_paths(entity_predicate_list, dictionary, kg_graph)
 
         # Find the best matching result
         best_results = Relevance.most_relevant_path(paths_list, user_input, model)
 
+        # Loop through the best_results and print each element
         for element in best_results:
             print(element[len(element) - 1])
 
